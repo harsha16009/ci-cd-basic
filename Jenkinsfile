@@ -5,6 +5,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building project...'
+                sh 'echo Hello from Jenkins > output.txt'
             }
         }
 
@@ -18,6 +19,12 @@ pipeline {
             steps {
                 echo 'Deploying project...'
             }
+        }
+    }
+
+    post {
+        success {
+            archiveArtifacts artifacts: 'output.txt', fingerprint: true
         }
     }
 }
