@@ -2,29 +2,23 @@ pipeline {
     agent any
 
     stages {
+        stage('Clean') {
+            steps {
+                deleteDir()
+            }
+        }
+
         stage('Build') {
             steps {
-                echo 'Building project...'
-                sh 'echo Hello from Jenkins > output.txt'
-            }
-        }
-
-        stage('Test') {
-            steps {
-                echo 'Testing project...'
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                echo 'Deploying project...'
+                echo 'Building...'
+                sh 'cat index.html > output.html'
             }
         }
     }
 
     post {
         success {
-            archiveArtifacts artifacts: 'output.txt', fingerprint: true
+            archiveArtifacts artifacts: 'output.html'
         }
     }
 }
